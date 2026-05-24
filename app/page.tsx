@@ -16,7 +16,6 @@ interface Product {
 }
 
 export default function HomePage() {
-
   const [products, setProducts] =
     useState<Product[]>([]);
 
@@ -28,7 +27,6 @@ export default function HomePage() {
 
   async function fetchProducts() {
     try {
-
       const response = await fetch(
         "/api/products"
       );
@@ -56,7 +54,15 @@ export default function HomePage() {
   }
 
   useEffect(() => {
+
     fetchProducts();
+
+    const interval = setInterval(() => {
+      fetchProducts();
+    }, 5000);
+
+    return () => clearInterval(interval);
+
   }, []);
 
   async function reserveProduct(
@@ -111,13 +117,16 @@ export default function HomePage() {
       );
 
       if (response.status === 409) {
+
         alert(
           "Not enough stock available"
         );
+
         return;
       }
 
       if (!response.ok) {
+
         throw new Error(
           "Reservation failed"
         );
@@ -200,15 +209,24 @@ export default function HomePage() {
                     </div>
 
                     <button
+                      disabled={
+                        inventory.availableStock <= 0
+                      }
                       onClick={() =>
                         reserveProduct(
                           product.id,
                           inventory.warehouse
                         )
                       }
-                      className="bg-black text-white px-4 py-2 rounded-lg"
+                      className={`px-4 py-2 rounded-lg text-white ${
+                        inventory.availableStock <= 0
+                          ? "bg-gray-400"
+                          : "bg-black"
+                      }`}
                     >
-                      Reserve
+                      {inventory.availableStock <= 0
+                        ? "Out of Stock"
+                        : "Reserve"}
                     </button>
 
                   </div>

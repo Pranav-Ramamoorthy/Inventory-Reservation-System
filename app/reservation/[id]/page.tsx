@@ -216,23 +216,28 @@ export default function ReservationPage({
           {timeLeft}
         </p>
 
-        <div className="flex gap-4">
+        {reservation.status === "PENDING" &&
+         timeLeft !== "Expired" && (
 
-          <button
-            onClick={confirmReservation}
-            className="bg-green-600 text-white px-4 py-2 rounded-lg"
-          >
-            Confirm Purchase
-          </button>
+          <div className="flex gap-4">
 
-          <button
-            onClick={cancelReservation}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg"
-          >
-            Cancel
-          </button>
+            <button
+              onClick={confirmReservation}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg"
+            >
+              Confirm Purchase
+            </button>
 
-        </div>
+            <button
+              onClick={cancelReservation}
+              className="bg-red-600 text-white px-4 py-2 rounded-lg"
+            >
+              Cancel
+            </button>
+
+          </div>
+
+        )}
 
         {message && (
           <p className="mt-6 text-lg">
