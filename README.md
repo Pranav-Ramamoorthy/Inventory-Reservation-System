@@ -29,13 +29,6 @@ The project was built using:
 
 ---
 
-# Live Deployment
-
-Production URL:
-
-https://inventory-reservation-system-three.vercel.app/
-
----
 
 # Tech Stack
 
